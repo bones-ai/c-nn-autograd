@@ -3,50 +3,6 @@
 #include <stdlib.h>
 #include "nn.h"
 
-void test_value()
-{
-    // x = a <op> b
-
-    Value *a = value_create(-2.0);
-    Value *b = value_create(3.0);
-    Value *d = value_operation(a, b, MUL);
-    Value *e = value_operation(a, b, ADD);
-    Value *f = value_operation(d, e, MUL);
-    // Value *b = value_create(5.0);
-    // Value *x = value_operation(a, b, MUL);
-
-    // printf("Before backprop (x = a <op> b)\n");
-    // printf("x => d: %f, g: %f\n", x->data, x->grad);
-    // printf("a => d: %f, g: %f\n", a->data, a->grad);
-    // printf("b => d: %f, g: %f\n", b->data, b->grad);
-    value_init_backprop(f);
-    printf("After backprop (x = a <op> b)\n");
-    // printf("x => d: %f, g: %f\n", x->data, x->grad);
-    printf("a => d: %f, g: %f\n", a->data, a->grad);
-    printf("b => d: %f, g: %f\n", b->data, b->grad);
-    printf("d => d: %f, g: %f\n", d->data, d->grad);
-    printf("e => d: %f, g: %f\n", e->data, e->grad);
-    printf("f => d: %f, g: %f\n", f->data, f->grad);
-
-    // printf("\n");
-    // printf("Before Nudge (x = a <op> b)\n");
-    // printf("x => d: %f, g: %f\n", x->data, x->grad);
-    // printf("a => d: %f, g: %f\n", a->data, a->grad);
-    // printf("b => d: %f, g: %f\n", b->data, b->grad);
-    // value_init_nudge(x, 0.0001);
-    // printf("After Nudge (x = a <op> b)\n");
-    // printf("x => d: %f, g: %f\n", x->data, x->grad);
-    // printf("a => d: %f, g: %f\n", a->data, a->grad);
-    // printf("b => d: %f, g: %f\n", b->data, b->grad);
-
-    value_free(a);
-    value_free(b);
-    value_free(d);
-    value_free(e);
-    value_free(f);
-    // value_free(x);
-}
-
 void train()
 {
     size_t num_iterations = 500;
@@ -116,10 +72,9 @@ void train()
 
 int main()
 {
+    // Seed rand
     srand(time(NULL));
 
-    test_value();
-    // train();
-
+    train();
     return 0;
 }
