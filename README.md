@@ -1,6 +1,6 @@
 
 ## Autograd in C
-A simple neural network and an autograd engine written in C
+A simple neural network and a scalar-valued autograd engine written in C
 
 ## Usage
 ```
