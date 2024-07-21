@@ -18,7 +18,6 @@ void _value_init_grad_reset(Value *v);
 double getRandDouble(void)
 {
     double val = (double)rand() / (double)RAND_MAX;
-    // Adjusts the range to -1.0 to 1.0
     return 2.0 * val - 1.0;
 }
 
@@ -47,15 +46,6 @@ void value_free(Value *v)
     v->first = NULL;
     v->second = NULL;
     v = NULL;
-}
-
-void value_free_recursive(Value *v)
-{
-    if (!v) return;
-    if (v->first) value_free_recursive(v->first);
-    if (v->second) value_free_recursive(v->second);
-
-    value_free(v);
 }
 
 Value* value_operation(Value *first, Value *second, Operation op)
@@ -104,6 +94,9 @@ void value_init_nudge(Value *v, double step_size)
         value_init_nudge(v->second, step_size);
 }
 
+// TODO: This calls backprop recursively, 
+// It doesn't use topological sorting, 
+// This might not work for DAGs
 void value_init_backprop(Value *v)
 {
     _value_init_grad_reset(v);
@@ -147,6 +140,7 @@ void _value_compute_gradients(Value *v)
         break;
     }
 }
+
 // =================================================================
 // MARK: Node Impl
 // =================================================================
